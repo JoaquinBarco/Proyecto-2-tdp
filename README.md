@@ -1,5 +1,4 @@
-# TDP Proyecto 2
- Sudoku
+# TDP Proyecto 2 Sudoku
 
 Controles:
 Click izquierdo: incrementa el valor de la celda
