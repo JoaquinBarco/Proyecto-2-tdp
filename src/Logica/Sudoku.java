@@ -108,21 +108,21 @@ public class Sudoku {
 	}
 	
 	public void preCheckCelda(Celda c) {
-		if(cantFila(c,true,null)-1==1)
+		if(cantFila(c,null)-1==1)
 			filaGris(c);
-		if(cantColumna(c,true,null)-1==1)
+		if(cantColumna(c,null)-1==1)
 			columnaGris(c);
-		if(cantCuadrado(c,true,null)-1==1) {
+		if(cantCuadrado(c,null)-1==1) {
 			cuadradoGris(c);
 		}
 	}
 	
 	public void checkCelda(Celda c) {
-		if(cantFila(c,true,null) > 1)
+		if(cantFila(c,null) > 1)
 			filaRoja(c);
-		if(cantColumna(c,true,null) > 1)
+		if(cantColumna(c,null) > 1)
 			columnaRoja(c);
-		if(cantCuadrado(c,true,null) > 1) {
+		if(cantCuadrado(c,null) > 1) {
 			cuadradoRoja(c);
 		}
 	}
@@ -140,7 +140,7 @@ public class Sudoku {
 		boolean b = true;
 		for(int i = 0;i<9 && b;i++) {
 			if(celdas[c.getV()][i] != c && celdas[c.getV()][i].getValor() == c.getValor()) {
-				if(cantColumna(celdas[c.getV()][i],false,c) < 1 && cantCuadrado(celdas[c.getV()][i],false,c) < 1)
+				if(cantColumna(celdas[c.getV()][i],c) <= 1 && cantCuadrado(celdas[c.getV()][i],c) <= 1)
 					celdas[c.getV()][i].estaRegular();
 				b = false;
 			}
@@ -159,7 +159,7 @@ public class Sudoku {
 		boolean b = true;
 		for(int i = 0;i<9 && b;i++) {
 			if(celdas[i][c.getH()] != c && celdas[i][c.getH()].getValor()==c.getValor()) {
-				if(cantFila(celdas[i][c.getH()],false,c) < 1 && cantCuadrado(celdas[i][c.getH()],false,c) < 1)
+				if(cantFila(celdas[i][c.getH()],c) <= 1 && cantCuadrado(celdas[i][c.getH()],c) <= 1)
 					celdas[i][c.getH()].estaRegular();
 				b = false;
 			}
@@ -232,7 +232,7 @@ public class Sudoku {
 		for(int i = maxY-3;i<maxY && b;i++) {
 			for(int j = maxX-3;j<maxX;j++) {
 				if(celdas[i][j]!=c && celdas[i][j].getValor() == c.getValor()) {
-					if(cantFila(celdas[i][j],false,c) < 1 && cantColumna(celdas[i][j],false,c) < 1)
+					if(cantFila(celdas[i][j],c) <= 1 && cantColumna(celdas[i][j],c) <= 1)
 						celdas[i][j].estaRegular();
 					b = false;
 				}
@@ -240,14 +240,13 @@ public class Sudoku {
 		}
 	}
 	
-	public int cantFila(Celda c,boolean contarC, Celda no) {
+	public int cantFila(Celda c, Celda no) {
 		int cont= 0;
 		for(int i = 0;i<9;i++) {
 			if(celdas[c.getV()][i] != no) {
 				if(celdas[c.getV()][i].getValor()==c.getValor()) {
 					if(celdas[c.getV()][i] == c) {
-						if(contarC)
-							cont++;
+						cont++;
 					}else 
 						cont++;
 				}
@@ -256,14 +255,13 @@ public class Sudoku {
 		return cont;
 	}
 	
-	public int cantColumna(Celda c, boolean contarC, Celda no) {
+	public int cantColumna(Celda c, Celda no) {
 		int cont= 0;
 		for(int i = 0;i<9;i++) {
 			if(celdas[i][c.getH()] != no) {
 				if(celdas[i][c.getH()].getValor()==c.getValor()) {
 					if(celdas[i][c.getH()] == c) {
-						if(contarC)
-							cont++;
+						cont++;
 					} else {
 						cont++;
 					}
@@ -273,7 +271,7 @@ public class Sudoku {
 		return cont;
 	}
 	
-	public int cantCuadrado(Celda c, boolean contarC, Celda no) {
+	public int cantCuadrado(Celda c, Celda no) {
 		Pair max = cuadradoMax(c);
 		int maxX = max.getA();
 		int maxY = max.getB();
@@ -283,9 +281,7 @@ public class Sudoku {
 				if(celdas[i][j] != no) {
 					if(celdas[i][j].getValor()==c.getValor()) {
 						if(celdas[i][j] == c) {
-							if(contarC) {
-								cont++;
-							}
+							cont++;
 						}else 
 							cont++;
 					}
